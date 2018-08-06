@@ -51,3 +51,22 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.test.java.srcDirs = [ "test/" ]
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        api(MavenPublication) {
+            groupId group
+            artifactId appName
+            
+            from components.java
+            
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
