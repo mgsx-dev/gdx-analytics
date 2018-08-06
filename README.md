@@ -3,13 +3,27 @@
 
 [Full documentation](https://jitpack.io/com/github/mgsx-dev/gdx-analytics/master-SNAPSHOT/javadoc/index.html)
 
+User tracking for your LibGDX game.
+
+| Compatibility    | Desktop      | WebGL        | Android      | iOS          |
+|------------------|:------------:|:------------:|:------------:|:------------:|
+| Google Analytic  | OK           | OK           | *not tested* | *not tested* |
+| Matomo (Piwik)   | *not tested* | *not tested* | *not tested* | *not tested* |
+
+
+# Setup
+
 ## Google Analytics
 
-You need to create a new website to track and get its credentials.
+You need to create a new website to track and get its tracker ID.
 
-TODO
+see [Example here](test/net/mgsx/analytics/GoogleAnalyticsTrackerTest.java)
 
 ## Matomo (piwik)
+
+see [Example here](test/net/mgsx/analytics/MatomoTrackerTest.java)
+
+### Test with a local instance (docker)
 
 run docker compose :
 
@@ -40,4 +54,4 @@ Then run integration test to send an event :
 
 * idsite must be your created site id (1 for the first one)
 
-you can see the result here : http://localhost:9000/index.php?module=CoreHome&action=index&date=today&period=day&idSite=1#?idSite=1&period=day&date=today&category=General_Actions&subcategory=Events_Events
+you can see the result [http://localhost:9000/index.php?module=CoreHome&action=index&date=today&period=day&idSite=1#?idSite=1&period=day&date=today&category=General_Actions&subcategory=Events_Events](here)
