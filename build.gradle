@@ -23,6 +23,9 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
 }
 
+apply plugin: "maven-publishing"
+group = 'net.mgsx'
+
 apply plugin: "eclipse"
 
 eclipse {
