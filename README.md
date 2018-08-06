@@ -1,4 +1,8 @@
 
+[![Release](https://jitpack.io/v/mgsx-dev/gdx-analytics.svg)](https://jitpack.io/#mgsx-dev/gdx-analytics)
+
+[Full documentation](https://jitpack.io/com/github/mgsx-dev/gdx-analytics/master-SNAPSHOT/javadoc/index.html)
+
 ## Google Analytics
 
 You need to create a new website to track and get its credentials.
