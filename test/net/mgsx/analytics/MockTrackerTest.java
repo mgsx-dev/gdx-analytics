@@ -1,24 +1,23 @@
 package net.mgsx.analytics;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import net.mgsx.analytics.matomo.MatomoTracker;
-
-public class MatomoTrackerTest extends Game
+public class MockTrackerTest extends Game
 {
 	public static void main (String[] arg) {
-		new LwjglApplication(new MatomoTrackerTest(), new LwjglApplicationConfiguration());
+		new LwjglApplication(new MockTrackerTest(), new LwjglApplicationConfiguration());
 	}
 
 	@Override
 	public void create() {
-		// initilize the app tracker :
-		// replace with your Matomo server URL, site tracking id and get user ID from preferences or such (optional).
-		GdxAnalytics.tracker = new MatomoTracker("http://localhost:9000", "1", 0xdeadbeef);
+		// app tracker is by default a LogTracker
+		// we just set log level to see calls in console
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 	
 	@Override

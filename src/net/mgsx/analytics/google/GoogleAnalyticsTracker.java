@@ -27,54 +27,50 @@ import net.mgsx.analytics.Tracker;
  */
 public class GoogleAnalyticsTracker implements Tracker
 {
+	private static final String TAG = "GoogleAnalyticsTracker";
+	
 	public static final HttpResponseListener responseLogger = new HttpResponseListener() {
 		
 		@Override
 		public void handleHttpResponse(HttpResponse httpResponse) {
 			HttpStatus status = httpResponse.getStatus();
 			if(status.getStatusCode() != HttpStatus.SC_OK){
-				Gdx.app.error("GAService", "bad status : " + status.getStatusCode() + " : " + status.toString());
+				Gdx.app.error(TAG, "bad status : " + status.getStatusCode() + " : " + status.toString());
 			}
 		}
 		
 		@Override
 		public void failed(Throwable t) {
-			Gdx.app.error("GAService", "error", t);
+			Gdx.app.error(TAG, "error", t);
 		}
 		
 		@Override
 		public void cancelled() {
-			Gdx.app.error("GAService", "canceled");
+			Gdx.app.error(TAG, "cancelled");
 		}
 	};
 	
-	public static boolean disabled = false;
-	
 	public static final String ANONYMOUS = "555"; // TODO is it an example or a keyword ?
 	
-	/* default to empty to avoid error during request compilation (disabled mode only) */
+	private final String trackingID;
+	private final String userID;
 	
-	private static String trackingID = "";
-	private static String userID = "";
-	private static String userAgent = "";
-	
-	public static void initialize(String trackingID, String userAgent)
+	public GoogleAnalyticsTracker(String trackingID)
 	{
-		initialize(trackingID, userAgent, ANONYMOUS);
+		this(trackingID, ANONYMOUS);
 	}
-	public static void initialize(String trackingID, String userAgent, String userID)
+	public GoogleAnalyticsTracker(String trackingID, String userID)
 	{
-		GoogleAnalyticsTracker.trackingID = trackingID;
-		GoogleAnalyticsTracker.userAgent = userAgent;
-		GoogleAnalyticsTracker.userID = userID;
+		this.trackingID = trackingID;
+		this.userID = userID;
 	}
 	
-	public static RequestBuilder builder()
+	public RequestBuilder builder()
 	{
 		return new RequestBuilder();
 	}
 	
-	public static class RequestBuilder
+	public class RequestBuilder
 	{
 		private Array<String> payloads = new Array<String>();
 		
@@ -92,13 +88,7 @@ public class GoogleAnalyticsTracker implements Tracker
 		}
 		public void send(HttpResponseListener responseListener)
 		{
-			if(disabled){
-				Gdx.app.log("GAService", "Skip disabled");
-				Gdx.app.log("GAService", userAgent);
-				for(String content : payloads)
-					Gdx.app.log("GAService", "request : " + content);
-			}
-			else if(payloads.size == 1) {
+			if(payloads.size == 1) {
 				HttpRequest httpRequest = newRequest()
 						.method("POST")
 						.url("https://www.google-analytics.com/collect")
@@ -133,13 +123,13 @@ public class GoogleAnalyticsTracker implements Tracker
 			HttpRequestBuilder builder = new HttpRequestBuilder().newRequest();
 			// user agent is automatically set in HTML5 context and can't be overriden (causing JS error)
 			if(Gdx.app.getType() != ApplicationType.WebGL){
-				builder.header(HttpRequestHeader.UserAgent, userAgent);
+				builder.header(HttpRequestHeader.UserAgent, Gdx.app.getType().toString());
 			}
 			return builder;
 		}
 	}
 	
-	private abstract static class MeasurementBuilder
+	private abstract class MeasurementBuilder
 	{
 		private RequestBuilder parentBuilder;
 		
@@ -170,7 +160,7 @@ public class GoogleAnalyticsTracker implements Tracker
 		}
 	}
 	
-	public static class EventBuilder extends MeasurementBuilder
+	public class EventBuilder extends MeasurementBuilder
 	{
 		private String category, action, label;
 		private Integer value;
@@ -212,7 +202,7 @@ public class GoogleAnalyticsTracker implements Tracker
 		}
 	}
 	
-	public static class ExceptionBuilder extends MeasurementBuilder
+	public class ExceptionBuilder extends MeasurementBuilder
 	{
 		private boolean fatal;
 		private String description;
@@ -266,7 +256,7 @@ public class GoogleAnalyticsTracker implements Tracker
 		}
 		
 		/* GWT compatible method (not accurate) */
-		private static String truncateToFitUtf8ByteLength(String s, int maxBytes)
+		private String truncateToFitUtf8ByteLength(String s, int maxBytes)
 		{
 			int len = maxBytes;
 			while(s.getBytes().length > maxBytes){

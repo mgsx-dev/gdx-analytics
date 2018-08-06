@@ -41,6 +41,18 @@ public class MatomoTracker implements Tracker
 	}
 	
 	/**
+	 * @param urlBase something like http://my-domain.com or http://localhost:9000
+	 * @param idSite id of the site to track (typically integer : 1 for first website, etc) see your matomo website configuation.
+	 * @param uid unique visitor identifier (optional)
+	 */
+	public MatomoTracker(String urlBase, String idSite, long uid) {
+		super();
+		this.urlBase = urlBase;
+		this.idSite = idSite;
+		this.idUser = String.format("%x", uid);
+	}
+	
+	/**
 	 * Optionnaly set a unique user identifier in order to have accurate analytics
 	 * @param uid
 	 */

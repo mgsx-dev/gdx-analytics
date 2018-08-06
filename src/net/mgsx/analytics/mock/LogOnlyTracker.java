@@ -6,20 +6,20 @@ import net.mgsx.analytics.Tracker;
 
 public class LogOnlyTracker implements Tracker
 {
-	private static final String TAG = "NoTracker";
+	private static final String TAG = "LogOnlyTracker";
 	
 	@Override
 	public void trackEvent(String category, String action) {
-		Gdx.app.debug(TAG, "skip trackEvent " + category + ", " + action);
+		Gdx.app.debug(TAG, "skip trackEvent [" + category + "] [" + action + "]");
 	}
 
 	@Override
 	public void trackEvent(String category, String action, String name) {
-		Gdx.app.debug(TAG, "skip trackEvent " + category + ", " + action + ", " + name);
+		Gdx.app.debug(TAG, "skip trackEvent [" + category + "] [" + action + "] [" + name + "]");
 	}
 
 	@Override
 	public void trackEvent(String category, String action, String name, int value) {
-		Gdx.app.debug(TAG, "skip trackEvent " + category + ", " + action + ", " + name + ", " + value);
+		Gdx.app.debug(TAG, "skip trackEvent [" + category + "] [" + action + "] [" + name + "] [" + value + "]");
 	}
 }
