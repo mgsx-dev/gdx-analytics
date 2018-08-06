@@ -49,22 +49,26 @@ public class MatomoTracker implements Tracker
 	}
 
 	/** see <a href="https://matomo.org/docs/event-tracking/">https://matomo.org/docs/event-tracking/</a> */
+	@Override
 	public void trackEvent(String category, String action) {
 		trackEvent(category, action, null, null);
 	}
 	
 	/** see <a href="https://matomo.org/docs/event-tracking/">https://matomo.org/docs/event-tracking/</a> */
+	@Override
 	public void trackEvent(String category, String action, String name) {
 		trackEvent(category, action, name, null);
 	}
 	
 	/** see <a href="https://matomo.org/docs/event-tracking/">https://matomo.org/docs/event-tracking/</a> */
-	public void trackEvent(String category, String action, String name, float value) {
+	@Override
+	public void trackEvent(String category, String action, String name, int value) {
 		trackEvent(category, action, name, String.valueOf(value));
 	}
 	
-	/** see <a href="https://matomo.org/docs/event-tracking/">https://matomo.org/docs/event-tracking/</a> */
-	public void trackEvent(String category, String action, String name, int value) {
+	/** Matomo specific feature : float value storage.
+	 * see <a href="https://matomo.org/docs/event-tracking/">https://matomo.org/docs/event-tracking/</a> */
+	public void trackEvent(String category, String action, String name, float value) {
 		trackEvent(category, action, name, String.valueOf(value));
 	}
 	

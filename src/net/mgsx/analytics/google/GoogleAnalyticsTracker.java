@@ -14,6 +14,8 @@ import com.badlogic.gdx.net.HttpRequestHeader;
 import com.badlogic.gdx.net.HttpStatus;
 import com.badlogic.gdx.utils.Array;
 
+import net.mgsx.analytics.Tracker;
+
 /**
  * 
  * specification API :
@@ -23,7 +25,7 @@ import com.badlogic.gdx.utils.Array;
  * @author mgsx
  *
  */
-public class GoogleAnalyticsTracker 
+public class GoogleAnalyticsTracker implements Tracker
 {
 	public static final HttpResponseListener responseLogger = new HttpResponseListener() {
 		
@@ -305,6 +307,19 @@ public class GoogleAnalyticsTracker
 			return "exception";
 		}
 		
+	}
+
+	@Override
+	public void trackEvent(String category, String action) {
+		builder().event(category, action).next().send();
+	}
+	@Override
+	public void trackEvent(String category, String action, String name) {
+		builder().event(category, action).label(name).next().send();
+	}
+	@Override
+	public void trackEvent(String category, String action, String name, int value) {
+		builder().event(category, action).label(name).value(value).next().send();
 	}
 	
 }
