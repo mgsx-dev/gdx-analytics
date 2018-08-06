@@ -1,0 +1,22 @@
+db:
+  image: mariadb:latest
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+app:
+  image: piwik:fpm
+  links:
+    - db
+  volumes:
+    - ./config:/var/www/html/config:rw
+web:
+  image: nginx
+  links:
+    - app
+  ports:
+    - '9000:80'
+  volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  volumes_from:
+    - app
+  environment:
+    - VIRTUAL_HOST
