@@ -10,6 +10,7 @@ User tracking for your LibGDX game.
 | Google Analytic  | OK           | OK           | *not tested* | *not tested* |
 | Matomo (Piwik)   | *not tested* | *not tested* | *not tested* | *not tested* |
 
+**GDPR compliance** : if you want to send data to identify the players (even randomly generated ID), you'll have to comply to GDPR law and ask consent to the players before performing any requests. You could collect data without player's consent but you can't use any identifier and then having less accurate statistics.
 
 # Setup
 
